@@ -38,7 +38,7 @@
                 <center><h5 class="title">Login</h5></center>
               </div>
               <div class="card-body">
-                <form id="login_form">
+                <form id="login_form" action="./files/dashboard.php" method="post">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
