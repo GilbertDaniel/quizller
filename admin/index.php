@@ -1,7 +1,9 @@
 <?php
-// session_start();
-// if(isset($_SESSION["user_id"]))
-//   header("Location:files/dashboard.php");
+session_start();
+if (isset($_SESSION["user_id"])) {
+    header("Location:files/dashboard.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,7 @@
                 <center><h5 class="title">Login</h5></center>
               </div>
               <div class="card-body">
-                <form id="login_form" action="./files/dashboard.php" method="post">
+                <form id="login_form">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -74,7 +76,7 @@
             </div>
           </div>
           <div class="col-md-4"></div>
-          
+
         </div>
       </div>
       <?php include "files/footer.php";?>
@@ -85,7 +87,7 @@
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
-    <!-- <script>
+    <script>
     $('#login_form').submit(function(event) {
       console.log($(this).serialize());
       $("#result").html("Logging in...");
@@ -111,6 +113,6 @@
         }
       });
     });
-  </script> -->
+  </script>
 </body>
 </html>

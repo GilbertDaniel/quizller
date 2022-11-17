@@ -35,7 +35,7 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
           </a>
         </li>
         <li class="<?=($activePage=='logout')? 'active': ''; ?>">
-          <a href="#">
+          <a href="./logout.php">
             <i class="now-ui-icons media-1_button-power"></i>
             <p>Logout</p>
           </a>
