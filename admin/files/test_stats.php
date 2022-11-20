@@ -1,7 +1,11 @@
 <?php
-session_start();
-if(!isset($_SESSION["user_id"]))
-  header("Location:../index.php");
+  include '../../database/config.php';
+  session_start();
+  if(!isset($_SESSION["user_id"]))
+    header("Location:../index.php");
+
+  $test_id = $_POST['test_id'];
+  $name = $_POST['test_name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +29,8 @@ if(!isset($_SESSION["user_id"]))
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/now-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
   <!-- <link type="text/css" rel="stylesheet" href="http://jqueryte.com/css/jquery-te.css" charset="utf-8"> -->
+  <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" charset="utf-8">
+
   <link href="../assets/css/main.css" rel="stylesheet" />
 </head>
 
@@ -46,7 +52,7 @@ if(!isset($_SESSION["user_id"]))
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Statistics</a>
+            <a class="navbar-brand" href="#pablo">Test Statistics</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -65,53 +71,55 @@ if(!isset($_SESSION["user_id"]))
               <div class="card-header">
                 <div class="row">
                   <div class="col-md-8">
-                    <h5 class="title">Completed Quiz Tests</h5>
+                    <h5 class="title"><?= $name; ?></h5>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- <button class="btn btn-primary btn-block btn-round" onclick="submit(<?= $test_id;?>,'<?php echo $name;?>')" style="margin-top:0px;width:200px !important;float:right !important;">Questions Stats</button> -->
                   </div>
                 </div>  
               </div>
               <div class="card-body">
-                  <?php
-                    include '../../database/config.php';
-                    $user_id = $_SESSION["user_id"];
-                    $sql = "select * from tests where teacher_id = $user_id and status_id = 3";
-                    $result = mysqli_query($conn,$sql);
-                    if(mysqli_num_rows($result) > 0) {
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                  <input type="hidden" name="general_settings"/>
+                  <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>SERIAL NO</th>
+                            <th>ROLL NO</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                      $sql = "select * from students where test_id = $test_id";
+                      $result = mysqli_query($conn,$sql);
+                      $i = 1;
                       while($row = mysqli_fetch_assoc($result)) {
+                        $roll_no = $row["rollno"];
+                        $sql1 = "select rollno from student_data where id = '$roll_no'";
+                        $result1 = mysqli_query($conn,$sql1);
+                        $row1 = mysqli_fetch_assoc($result1);
                         ?>
-                          <div class="card" style="background:#ededed;">
-                              <div class="card-body" onclick="submit(<?= $row['id'];?>,'<?php echo $row['name'];?>')">
-                                <h6><?= $row["name"];?></h6>
-                                <div class="row">
-                                  <div class="col-md-8">
-                                    <p>Subject - <?= $row["subject"];?></p>
-                                  </div>
-                                  <div class="col-md-4"> 
-                                    <p style="text-align:right;">Date - <?= $row["date"];?></p>
-                                  </div>
-                                </div>
-                              </div>
-                          </div>
-                        <?php
+                        <tr>
+                          <td><?= $i; ?></td>
+                          <td><?= $row1["rollno"]; ?></td>
+                          <td><?= $row["score"]; ?></td>
+                        </tr>
+
+                    <?php    
+                      $i++;
                       }
-                    }
-                    else {
-                      ?>
-                      <div id="no-data">
-                        <center>
-                          <img src="../assets/img/no-data.svg" height="400" width="400"/>
-                          <center><h5>No Data</h5></center>
-                        </center>
-                      </div>
-                      <?php
-                    }
-                  ?>
+                    ?>
+
+                    </tbody>
+                  </table>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <form method="POST" action="test_stats.php" id="test_details">
+      <form method="POST" action="test_question_stats.php" id="test_details">
         <input type="hidden" id="test_id" name="test_id">
         <input type="hidden" id="test_name" name="test_name">
       </form>
@@ -130,16 +138,24 @@ if(!isset($_SESSION["user_id"]))
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.1.0" type="text/javascript"></script>
   <!-- <script src="http://jqueryte.com/js/jquery-te-1.4.0.min.js"></script> -->
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 </body>
 <script>
-  function redirect_to_new_test() {
-    window.location = "new_test.php";
+  function redirect_to_question_test() {
+    window.location = "test_question_stats.php";
   }
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });
+
 
   function submit(val1,val2) {
     document.getElementById("test_id").value = val1;
     document.getElementById("test_name").value = val2;
     document.getElementById("test_details").submit();
   }
+
+
 </script>
 </html>

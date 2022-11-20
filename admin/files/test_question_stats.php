@@ -1,7 +1,11 @@
 <?php
-session_start();
-if(!isset($_SESSION["user_id"]))
-  header("Location:../index.php");
+  include '../../database/config.php';
+  session_start();
+  if(!isset($_SESSION["user_id"]))
+    header("Location:../index.php");
+
+  $test_id = $_POST['test_id'];
+  $name = $_POST['test_name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,56 +69,41 @@ if(!isset($_SESSION["user_id"]))
               <div class="card-header">
                 <div class="row">
                   <div class="col-md-8">
-                    <h5 class="title">Completed Quiz Tests</h5>
+                    <h5 class="title"><?= $name; ?></h5>
                   </div>
                 </div>  
               </div>
               <div class="card-body">
-                  <?php
-                    include '../../database/config.php';
-                    $user_id = $_SESSION["user_id"];
-                    $sql = "select * from tests where teacher_id = $user_id and status_id = 3";
-                    $result = mysqli_query($conn,$sql);
-                    if(mysqli_num_rows($result) > 0) {
+                    <?php
+                      $sql = "select * from score where test_id = '$test_id'";
+                      $result = mysqli_query($conn,$sql);
                       while($row = mysqli_fetch_assoc($result)) {
+                        $question_id = $row["question_id"];
+                        $sql1 = "select * from Questions where id = '$question_id'";
+                        $result1 = mysqli_query($conn,$sql1);
+                        $row1 = mysqli_fetch_assoc($result1);
                         ?>
                           <div class="card" style="background:#ededed;">
-                              <div class="card-body" onclick="submit(<?= $row['id'];?>,'<?php echo $row['name'];?>')">
-                                <h6><?= $row["name"];?></h6>
-                                <div class="row">
-                                  <div class="col-md-8">
-                                    <p>Subject - <?= $row["subject"];?></p>
+                              <div class="card-body">
+                                  <h6><?= $row1["title"]; ?></h6>
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <p>Correct Count - <?= $row["correct_count"];?></p>  
+                                      </div> 
+                                      <div class="col-md-6">
+                                          <p style="text-align:right;">Wrong Count - <?= $row["wrong_count"];?></p>
+                                      </div>
                                   </div>
-                                  <div class="col-md-4"> 
-                                    <p style="text-align:right;">Date - <?= $row["date"];?></p>
-                                  </div>
-                                </div>
                               </div>
                           </div>
-                        <?php
+                    <?php    
                       }
-                    }
-                    else {
-                      ?>
-                      <div id="no-data">
-                        <center>
-                          <img src="../assets/img/no-data.svg" height="400" width="400"/>
-                          <center><h5>No Data</h5></center>
-                        </center>
-                      </div>
-                      <?php
-                    }
-                  ?>
+                    ?>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <form method="POST" action="test_stats.php" id="test_details">
-        <input type="hidden" id="test_id" name="test_id">
-        <input type="hidden" id="test_name" name="test_name">
-      </form>
       <!-- footer -->
       <?php
         include "footer.php";
@@ -131,15 +120,4 @@ if(!isset($_SESSION["user_id"]))
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.1.0" type="text/javascript"></script>
   <!-- <script src="http://jqueryte.com/js/jquery-te-1.4.0.min.js"></script> -->
 </body>
-<script>
-  function redirect_to_new_test() {
-    window.location = "new_test.php";
-  }
-
-  function submit(val1,val2) {
-    document.getElementById("test_id").value = val1;
-    document.getElementById("test_name").value = val2;
-    document.getElementById("test_details").submit();
-  }
-</script>
 </html>
