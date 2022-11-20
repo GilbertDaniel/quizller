@@ -147,91 +147,92 @@ if(!isset($_SESSION["user_id"]))
 
   <script>
 
-//     $( document ).ready(function() {
-//       $.ajax({
-// 						type: 'POST',
-// 						url: 'get_classes.php',
-// 						success: function (response) {
-//               var opts = $.parseJSON(response);
-//                 $.each(opts, function(i, d) {
-//                     $('#options').append('<option value="' + d + '">' + d + '</option>');
-//                 });
-// 						}
-// 					});
-//     });
+    $( document ).ready(function() {
+      $.ajax({
+						type: 'POST',
+						url: 'get_classes.php',
+						success: function (response) {
+              var opts = $.parseJSON(response);
+                $.each(opts, function(i, d) {
+                    $('#options').append('<option value="' + d + '">' + d + '</option>');
+                });
+						}
+					});
+    });
 
-//     function createNewClass(){
-//       var someValidationFailed = false;
+    function createNewClass(){
+      var someValidationFailed = false;
 
-//       if(!$('#class_name').val()){
-//           $('#class_name_error').html("Please enter Class Name");
-//           someValidationFailed = true;
-//       }
+      if(!$('#class_name').val()){
+          $('#class_name_error').html("Please enter Class Name");
+          someValidationFailed = true;
+      }
 
-//       if(!$('#starting_roll_number').val()){
-//         $('#starting_roll_error').html("Please enter Starting roll number");
-//         someValidationFailed = true;
-//       }
+      if(!$('#starting_roll_number').val()){
+        $('#starting_roll_error').html("Please enter Starting roll number");
+        someValidationFailed = true;
+      }
 
-//       if($('#starting_roll_number').val() && !$.isNumeric($('#starting_roll_number').val())){
-//         $('#starting_roll_error').html("Please enter a valid Starting roll number");
-//         someValidationFailed = true;
-//       }
+      if($('#starting_roll_number').val() && !$.isNumeric($('#starting_roll_number').val())){
+        $('#starting_roll_error').html("Please enter a valid Starting roll number");
+        someValidationFailed = true;
+      }
 
-//       if(!$('#ending_roll_number').val()){
-//         $('#ending_roll_error').html("Please enter Ending roll number");
-//         someValidationFailed = true;
-//       }
+      if(!$('#ending_roll_number').val()){
+        $('#ending_roll_error').html("Please enter Ending roll number");
+        someValidationFailed = true;
+      }
 
-//       if($('#ending_roll_number').val() && !$.isNumeric($('#ending_roll_number').val())){
-//         $('#ending_roll_error').html("Please enter a valid Ending roll number");
-//         someValidationFailed = true;
-//       }
+      if($('#ending_roll_number').val() && !$.isNumeric($('#ending_roll_number').val())){
+        $('#ending_roll_error').html("Please enter a valid Ending roll number");
+        someValidationFailed = true;
+      }
       
-//       if(!someValidationFailed){
+      if(!someValidationFailed){
         
-//       $.ajax({
-//           type: 'POST',
-//           url: 'add_new_class.php',
-//           data: {
-//             'class_name': $('#class_name').val(),
-//             'starting_roll_number': $('#starting_roll_number').val(),
-//             'ending_roll_number': $('#ending_roll_number').val()
-//           },
-//           success: function (response) {
-//             alert(response);
-//           }
-//         });
-//       }
-// }
+      $.ajax({
+          type: 'POST',
+          url: 'add_new_class.php',
+          data: {
+            'class_name': $('#class_name').val(),
+            'starting_roll_number': $('#starting_roll_number').val(),
+            'ending_roll_number': $('#ending_roll_number').val()
+          },
+          success: function (response) {
+            alert(response);
+            location.reload();
+          }
+        });
+      }
+}
 
-//     function addStudent(){
-//       var someValidationFailed = true;
+    function addStudent(){
+      var someValidationFailed = false;
 
-//       if(!$('#extra_roll_number').val()){
-//         $('#extra_roll_error').html("Please enter the Roll number");
-//           someValidationFailed = true;
-//       }
+      if(!$('#extra_roll_number').val()){
+        $('#extra_roll_error').html("Please enter the Roll number");
+          someValidationFailed = true;
+      }
 
-//       if($('#extra_roll_number').val() && !$.isNumeric($('#starting_roll_number').val())){
-//         $('#extra_roll_error').html("Please enter a valid Roll number");
-//           someValidationFailed = true;
-//       }
+      if(!$.isNumeric($('#extra_roll_number').val())){
+        $('#extra_roll_error').html("Please enter a valid Roll number");
+          someValidationFailed = true;
+      }
 
-//     if(!someValidationFailed){
-//       $.ajax({
-//         type: 'POST',
-//         url: 'add_extra_student.php',
-//         data: {
-//           'class_name': $('#options option:selected').val(),
-//           'extra_roll_number': $('#extra_roll_number').val(),
-//         },
-//         success: function (response) {
-//           alert(response);
-//         }
-//       }); 
-//     } 
-//     }
+    if(!someValidationFailed){
+      $.ajax({
+        type: 'POST',
+        url: 'add_extra_student.php',
+        data: {
+          'class_name': $('#options option:selected').val(),
+          'extra_roll_number': $('#extra_roll_number').val(),
+        },
+        success: function (response) {
+          alert(response);
+        }
+      }); 
+    } 
+    }
 
   </script>
 </body>
