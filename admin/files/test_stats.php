@@ -59,6 +59,7 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
+          <?php include "navitem.php"; ?>
         </div>
       </nav>
       <!-- End Navbar -->
@@ -74,7 +75,7 @@
                     <h5 class="title"><?= $name; ?></h5>
                   </div>
                   <div class="col-md-4">
-                    <!-- <button class="btn btn-primary btn-block btn-round" onclick="submit(<?= $test_id;?>,'<?php echo $name;?>')" style="margin-top:0px;width:200px !important;float:right !important;">Questions Stats</button> -->
+                    <button class="btn btn-primary btn-block btn-round" onclick="submit(<?= $test_id;?>,'<?php echo $name;?>')" style="margin-top:0px;width:200px !important;float:right !important;">Questions Stats</button>
                   </div>
                 </div>  
               </div>

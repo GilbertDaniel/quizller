@@ -51,6 +51,7 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
+          <!-- <?php include "navitem.php"; ?> -->
         </div>
       </nav>
       <!-- End Navbar -->
@@ -111,41 +112,40 @@
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.1.0" type="text/javascript"></script>
   <!-- <script src="http://jqueryte.com/js/jquery-te-1.4.0.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
-
+</body>
 <script>
 
-//     var total_count;
-//   $( document ).ready(function() {
-//     $.ajax({
-// 						type: 'POST',
-// 						url: 'get_classes.php',
-// 						success: function (response) {
-//               response.counter = 'foo';
-//               var opts = $.parseJSON(response);
-//                 $.each(opts, function(i, d) {
-//                     $('#options').append('<option value="' + d + '">' + d + '</option>');
-//                 });
-// 						}
-// 		});
-//   });
+var total_count;
+  $( document ).ready(function() {
+    $.ajax({
+						type: 'POST',
+						url: 'get_classes.php',
+						success: function (response) {
+              response.counter = 'foo';
+              var opts = $.parseJSON(response);
+                $.each(opts, function(i, d) {
+                    $('#options').append('<option value="' + d + '">' + d + '</option>');
+                });
+						}
+		});
+  });
 
-//   function populateTable(){
-//     $.ajax({
-// 						type: 'POST',
-// 						url: 'get_student_from_class.php',
-//             data : {
-//               'class_name' : $('#options option:selected').val(),
-//             },
-//             datatype : 'json',
-// 						success: function (response) {
-//               var jsondata = JSON.parse(response);
-//                 $('#roll_numbers_table').bootstrapTable({
-//                   data:jsondata,
-//                 });
-//           }
-//     });
-//   }
+  function populateTable(){
+    $.ajax({
+						type: 'POST',
+						url: 'get_student_from_class.php',
+            data : {
+              'class_name' : $('#options option:selected').val(),
+            },
+            datatype : 'json',
+						success: function (response) {
+              var jsondata = JSON.parse(response);
+                $('#roll_numbers_table').bootstrapTable({
+                  data:jsondata,
+                });
+          }
+    });
+  }
   
 </script>
-</body>
 </html>

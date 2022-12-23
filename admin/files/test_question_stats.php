@@ -57,6 +57,7 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
+          <?php include "navitem.php"; ?>
         </div>
       </nav>
       <!-- End Navbar -->
