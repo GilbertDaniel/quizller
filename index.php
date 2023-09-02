@@ -70,7 +70,7 @@
 						</div>
 						<div class="login100-form validate-form">
 						<span class="login100-form-title">
-							Student Login
+							Student Logins
 						</span>
 						
 						<div class="wrap-input100 validate-input">
